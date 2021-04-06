@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑用户信息</title>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/js/personal/edit.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/user/register.css" />
+    <!--导入zui主要用于显示修改用户信息成功时弹出的提示框-->
+    <!--导入zui的css-->
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <link rel="stylesheet" th:href="@{/zui/bootbox/bootbox.css}"/>
+    <!--导入zui的js-->
+    <script th:src="@{/zui/js/zui.js}"></script>
+    <script th:src="@{/zui/bootbox/bootbox.js}"></script>
+</head>
+<body>
+<div>
+    <form id="register_form" method="post" style="margin-left: 50px;width: 800px;">
+        <p style="text-align: center;color: rgb(200,142,123);margin-top: -20px;font-size: 15px;">编辑用户信息</p>
+        <div>
+            <label>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:</label>
+            <input id="nickname" name="nickname" class="text_input" type="text" th:value="${user.nickname}" placeholder="请输入用户昵称" />
+            <div id="nicknameErrorMsg" style="width: 200px;height:30px;background: rgb(245,242,183);margin-left:400px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+        </div>
+        <br/>
+        <div>
+            <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+            <input id="email" name="email" class="text_input" disabled="disabled" placeholder="请输入邮箱账号" th:value="${user.email}" type="email" />
+            <div id="emailErrorMsg" style="width: 200px;height:30px;background: rgb(245,242,183);margin-left:400px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+        </div><br/>
+        <div>
+            <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+            <input id="password" name="password" class="text_input" th:value="${user.password}" placeholder="请输入用户密码" type="password" />
+            <div id="passwordErrorMsg" style="width: 200px;height:30px;background: rgb(245,242,183);margin-left:400px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+        </div><br/>
+        <div>
+            <label>用户头像:</label>
+            <img id="oldImage" src="" th:src="@{'/image/headPicture/'+ ${user.image}}" style="width: 80px;height: 70px;">
+            <input id="image" name="image" multiple type="file" />
+        </div><br/>
+        <div>
+            <label>个性签名:</label><br/>
+            <textarea id="signature" name="signature" rows="4"  th:text="${user.signature}" placeholder="请输入个性签名"></textarea>
+        </div>
+        <div><hr /></div>
+        <div style="margin-top: 20px">
+            <button class="button" type="button" onclick="edit()" style="margin-left: 210px;font-size: 120%;width: 150px;">确认修改</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

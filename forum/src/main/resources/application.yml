@@ -1,0 +1,31 @@
+#项目访问接口
+server:
+  port: 8081
+spring:
+  #配置数据库
+  datasource:
+    url: jdbc:mysql://localhost:3306/hbgc_forum?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password:  root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #配置访问的文件路径
+  resources:
+    static-locations: classpath:/static,classpath:/mybatis,classpath:/resources,classpath:templates,classpath:/META-INF/resources
+#数据库操作语句
+mybatis:
+  type-aliases-package: com.dto
+  mapper-locations: classpath:mybatis/*.xml
+#分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  pageSizeZero: true
+  params: count=countSql
+
+#后台管理员的用户名和密码
+bg.email: 123456@163.com
+bg.password: 123456
+
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.GoodsMapper">
+    <resultMap id="BaseResultMap" type="com.dto.Goods">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="goodsname" jdbcType="VARCHAR" property="goodsName"></result>
+        <result column="goodsprice" jdbcType="VARCHAR" property="goodsPrice"></result>
+        <result column="goodsdescribe" jdbcType="VARCHAR" property="goodsDescribe"></result>
+        <result column="goodspicture" jdbcType="VARCHAR" property="goodsPicture"></result>
+        <result column="publishtime" jdbcType="VARCHAR" property="publishTime"></result>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"></result>
+        <result column="user_id" jdbcType="INTEGER" property="userId"></result>
+    </resultMap>
+
+    <select id="findGoodsById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fgoods
+        <if  test="_parameter !=null and _parameter !=''">
+          where id=#{id}
+        </if>
+    </select>
+
+    <select id="findGoodsByTypeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fgoods
+        <if  test="_parameter !=null and _parameter !=''">
+            where type_id=#{typeId}
+        </if>
+        order by publishtime desc
+    </select>
+    <select id="findGoodsByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fgoods
+        <if  test="_parameter !=null and _parameter !=''">
+            where user_id=#{userId}
+        </if>
+        order by publishtime desc
+    </select>
+    <select id="findAllGoods" resultMap="BaseResultMap">
+        select * from fgoods order by publishtime desc
+    </select>
+    <insert id="insertGoods" parameterType="com.dto.Goods">
+		insert into
+		fgoods(goodsname,goodsprice,goodsdescribe,goodspicture,publishtime,type_id,user_id) values
+		(#{goodsName,jdbcType=VARCHAR},#{goodsPrice,jdbcType=VARCHAR},
+		#{goodsDescribe,jdbcType=VARCHAR},#{goodsPicture,jdbcType=VARCHAR},
+		#{publishTime,jdbcType=VARCHAR},#{typeId,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER})
+	</insert>
+    <delete id="deleteGoodsById" parameterType="java.lang.Integer">
+         delete from fgoods where id=#{id}
+    </delete>
+    <!--批量删除-->
+    <!--批量删除-->
+    <delete id="deleteManyGoods" parameterType="java.lang.Integer">
+        delete from fgoods where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
+

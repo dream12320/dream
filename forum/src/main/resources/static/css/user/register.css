@@ -1,0 +1,58 @@
+body {
+    font: normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;
+    color: #222;
+    background: url("/image/register/regist-bg.jpg") no-repeat fixed center;
+    overflow-y: scroll;
+}
+#register_form {
+    width: 755px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 3em;
+    border-radius: 3px;
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, .2);
+    opacity: 0.88;
+}
+
+.text_input {
+    width: 295px;
+    height: 36px;
+    border: 1px solid #cad2db;
+    background: rgb(245,242,183);
+    padding: 0 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 36px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #717171;
+    font-family: Arial;
+}
+.button {
+    color: rgb(0, 0, 0);
+    font-size: 100%;
+    opacity: 1;
+    width: 100px;
+    height: 40px;
+    background-color: rgb(241,200,95);
+    border-radius: 4px;
+}
+
+.button:hover {
+    background-color:cornsilk;
+    transition: 0.3s linear;
+}
+
+#signature{
+    width: 300px;
+    margin-left: 60px;
+    background: rgb(245,242,183);
+    font-size: 14px;
+    color: #717171;
+    font-family: Arial;
+}
+
+#oldImage:hover{
+    transform:scale(1.5);
+}

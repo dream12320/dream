@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" src="/js/post/message.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/post/message.css" />
+    <!--导入zui主要用于显示帖子发布成功时弹出的提示框-->
+    <!--导入zui的css-->
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <link rel="stylesheet" th:href="@{/zui/bootbox/bootbox.css}"/>
+    <!--导入zui的js-->
+    <script th:src="@{/zui/js/zui.js}"></script>
+    <script th:src="@{/zui/bootbox/bootbox.js}"></script>
+</head>
+<body>
+<div>
+    <div id="messages-up">
+        <div class="center-in-center" style="width: 400px;height: 20px;">
+            <ul style="margin: 0 0 0 0">
+                <li><a href="/home.html" style="color: #1a1a1a">首页</a></li>
+                <li><a href="/post/message">发布帖子</a></li>
+                <li><span>|</span></li>
+                <li><a href="#" style="color: #1a1a1a">我的帖子</a></li>
+                <li><a href="#">我的评论</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div id="messages-down">
+            <form id="messages_form" method="post">
+                <div class="messages-warn">
+                    <span><strong>警告！</strong>请正确填写内容，文明用语。</span>
+                </div>
+                <div>
+                    <label style="color: #717171;font-size: 14px;">帖子类型:</label>
+                    <select  id="postType" class="messages_input">
+                        <option value="">请选择帖子类型</option>
+                        <option th:each="ptList:${pTypeList}" th:value="${ptList.id}" th:text="${ptList.name}"></option>
+                    </select>
+                    <div id="typeIdErrorMsg" style="width: 120px;height:30px;background: rgb(245,242,183);margin-left:500px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+                </div>
+                <br/>
+                <div>
+                    <label style="color: #717171;font-size: 14px;">帖子题目:</label>
+                    <input id="theme" name="theme" class="messages_input" placeholder="请输入帖子题目" type="text" style="width: 390px;"/>
+                    <div id="themeErrorMsg" style="width: 120px;height:30px;background: rgb(245,242,183);margin-left:500px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+                </div><br/>
+                <div>
+                    <label style="color: #717171;font-size: 14px;">帖子内容:</label><br/>
+                    <textarea id="content" name="contents" rows="6"  placeholder="请输入帖子内容(不少于20字,不超过2000字)"></textarea>
+                    <div id="contentErrorMsg" style="width: 120px;height:30px;background: rgb(245,242,183);margin-left:500px;margin-top:-35px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+                </div>
+                <div><hr /></div>
+                <div style="margin-top: 20px;margin-left: 230px">
+                    <button class="post" type="button" onclick="post()">立即发布</button>
+                </div>
+            </form>
+            <div id="messages_security">
+                <p style="text-align: center"><strong>网络规范用语</strong></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全国网络安全和信息化工作会议上, 近平总书强调指出，要提高网络综合治理能力,
+                   形成多方主体参与，经济、法律、 技术和多手段相结合的综合治网格局。
+                   强化网上正面宣传和引导的同时, 积极培育和践行社会主义核心价值观,
+                   进一步净化网络环境，规范网络用语势在必行。</p>
+                <img src="/image/post/internetSecurity.jpg" style="width: 280px">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>帖子详情</title>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/js/post/detail.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/post/detail.css" />
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <script>
+        $(function () {
+            var pages=[[${pageInfo.pages}]];//获取总页数
+            var pageNum=[[${pageInfo.pageNum}]];//获取当前页
+
+            if(pages==0){//没有数据
+                //三个页码不显示
+                $("#firstPage").hide();
+                $("#secondPage").hide();//表示当前页
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==1){//有一页数据
+                //只显示当前页数据
+                $("#firstPage").hide();
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==2 && pageNum == 2){//有两页数据(并且当前页等于总页数)
+                //只显示当前页和上一页数据
+                $("#thirdPage").hide();
+            }else if(pages==2 && pageNum == 1){//有两页数据(并且当前页等于首页)
+                //只显示当前页和下一页数据
+                $("#firstPage").hide();
+            }else if(pages>=3 && pageNum==pages){
+                //当页码大于三页，且点击最后一页
+                $("#first").html(pageNum-2);
+                $("#second").html(pageNum-1);
+                $("#third").html(pageNum);
+            }else if(pages>=3 && pageNum==1){
+                //当页码大于三页，且点击第一页
+                $("#first").html(pageNum);
+                $("#second").html(pageNum + 1);
+                $("#third").html(pageNum + 2);
+            }
+        })
+    </script>
+</head>
+<body>
+<div id="postDetail">
+    <div id="postDetail_up">
+        <a class="nav-txt detail-span-gaps" href="/home.html">河北工程大学校园论坛</a>
+        <a class="nav-txt"> > </a>
+        <a class="nav-txt" th:href="@{'/personal/personalPosts/1'}" target="iframe">返回个人帖子列表</a>
+        <a class="nav-txt detail-span-gap" href="/post/message" target="iframe">[我要发帖]</a>
+        <br/><br/>
+        <p th:text="${post.theme}" style="text-align: center;line-height: 30px;color:#1251b6;font-size: 17px;"></p>
+        <br/>
+        <p style="text-align: center">
+            <span class="detail-span"><img src="/image/post/expression.png" style="vertical-align:middle">楼主：</span>
+            <a th:text="${post.userName}" class="detail-userName" href="#"></a>
+            <span><img src="/image/post/rank.png" style="vertical-align:middle"></span>
+            <span class="detail-span detail-span-gap"> 时间：</span><span th:text="${post.postTime}" class="detail-span"></span>
+            <span class="detail-span detail-span-gap">浏览量：</span><span th:text="${post.flowNumber}" class="detail-span"></span>
+            <span class="detail-span detail-span-gap">回复量：</span><span th:text="${post.replyNumber}" class="detail-span"></span>
+        </p><br/>
+    </div>
+    <div id="postDetail_middle">
+        <p class="detail-txt" th:utext="${post.content}"></p>
+    </div>
+    <div id="postDetail_bottom">
+        <hr style="border:0;background-color:rgb(220, 220, 220);;height:1px;">
+        <p style="color:#1251b6;margin-top: 10px;margin-bottom: 20px;">评论帖子</p>
+        <form id="comment_form">
+            <input id="postId" name="postId" th:value="${post.id}" type="hidden"/>
+            <input name="userId" th:value="${post.userId}" type="hidden"/>
+            <textarea id="comment" name="commentContents" rows="6"  placeholder="请输入帖子评论(不少于5字,不超过500字)"></textarea>
+            <div id="commentErrorMsg" style="width: 150px;height:30px;background: rgb(245,242,183);margin-left:500px;margin-top:-35px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+            <div>
+                <button class="comment-button" type="button" onclick='postComment("1")'>评论帖子</button>
+            </div>
+        </form>
+    </div>
+    <div id="postDetail_commentList">
+        <hr style="border:0;background-color:rgb(220, 220, 220);;height:1px;">
+        <table cellspacing="0" th:each="comment,userStat:${commentList}" style="margin-top: 20px;">
+            <tr>
+                <td class="author">
+                    <a th:text="${post.userName}" href="#"></a>
+                </td>
+                <td th:text="${comment.commentTime}" class="time"></td>
+                <td th:text="${userStat.count}+'楼'" class="text"></td>
+            </tr>
+            <tr>
+                <td>
+                    <p th:utext="${comment.commentContent}" class="comment-text"><p/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+    <div id="pagination">
+        <div id="pages" class="center-in-center">
+            <ul class="pager">
+                <li id="prePage" class="previous">
+                    <a th:href="@{'/post/getDetail/1/'+${post.id}+'/'+ ${pageInfo.prePage}}">«上一页</a>
+                </li>
+                <li id="firstPage">
+                    <a id="first" th:text="${pageInfo.pageNum -1}" th:href="@{'/post/getDetail/1/'+${post.id}+'/'+ ${pageInfo.pageNum -1}}"></a>
+                </li>
+                <li id="secondPage" class="active">
+                    <a id="second" th:text="${pageInfo.pageNum}" th:href="@{'/post/getDetail/1/'+${post.id}+'/'+ ${pageInfo.pageNum}}"></a>
+                </li>
+                <li id="thirdPage">
+                    <a id="third" th:text="${pageInfo.pageNum + 1}" th:href="@{'/post/getDetail/1/'+${post.id}+'/'+ ${pageInfo.pageNum +1}}"></a>
+                </li>
+                <li id="nextPage" class="next">
+                    <a th:href="@{'/post/getDetail/1/'+${post.id}+'/'+ ${pageInfo.nextPage}}">下一页»</a>
+                </li>
+                <li><span th:text="'共'+ ${pageInfo.pages} +'页'"></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

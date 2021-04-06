@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <link rel="stylesheet" type="text/css" href="/css/home/home.css" />
+</head>
+<body>
+<div id="home">
+    <div id="left">
+        <img src="/image/public/hot-post.gif">
+        <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+        <ul th:each="post:${pList200}">
+            <li>
+                <a th:text="${post.theme}" th:href="@{'/post/getDetail/0/'+${post.id} + '/1'}" class="title"></a>
+            </li>
+        </ul>
+        <img src="/image/public/hot-list.gif">
+        <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+        <ul th:each="post:${pList100}">
+            <li>
+                <a th:text="${post.theme}" th:href="@{'/post/getDetail/0/'+${post.id} + '/1'}" class="title"></a>
+            </li>
+        </ul>
+        <img src="/image/public/diamond.gif">
+        <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+        <ul th:each="post:${pList50}">
+            <li>
+                <a th:text="${post.theme}" th:href="@{'/post/getDetail/0/'+${post.id} + '/1'}" class="title"></a>
+            </li>
+        </ul>
+        <img src="/image/public/news.gif">
+        <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+        <ul th:each="post:${pList10}">
+            <li>
+                <a th:text="${post.theme}" th:href="@{'/post/getDetail/0/'+${post.id} + '/1'}" class="title"></a>
+            </li>
+        </ul>
+    </div>
+    <div id="right">
+        <div style="margin-left: 50px">
+            <img src="/image/public/advert-area.gif">
+            <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+            <img src="/image/public/advert.png" style="border-radius: 3px;" />
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;邯郸矿院是河北工程大学。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;其前身是1952年创建的开滦煤矿工业学,
+                2003年河北建筑科技学院、邯郸农业高等专科学校、邯郸医学高等专科学校、华北水利水电学院（邯郸）
+                合并组建河北工程学院后2006年2月14日更名为河北工程大学。</p>
+            <img src="/image/public/advert2.png" style="border-radius: 3px;"/>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河北工程大学---社团。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;在中国，高校学生社团已有一百多年的历史。大学生社团不再只是象牙塔深处的一个亮点，
+                它要担当的将是象牙塔内外各行各业各组织机构沟通交流的使者每个大学生社团都会进行纳新，
+                需要大量的宣传和自我展示，吸引新生加入，评选活动对社团来说是一个很好的推广机会。</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

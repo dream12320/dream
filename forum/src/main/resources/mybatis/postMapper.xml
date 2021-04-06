@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PostMapper">
+    <resultMap id="BaseResultMap" type="com.dto.Post">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="theme" jdbcType="VARCHAR" property="theme"></result>
+        <result column="content" jdbcType="VARCHAR" property="content"></result>
+        <result column="flownumber" jdbcType="INTEGER" property="flowNumber"></result>
+        <result column="replynumber" jdbcType="INTEGER" property="replyNumber"></result>
+        <result column="posttime" jdbcType="VARCHAR" property="postTime"></result>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"></result>
+        <result column="user_id" jdbcType="INTEGER" property="userId"></result>
+    </resultMap>
+
+    <select id="findPostById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fpost
+        <if  test="_parameter !=null and _parameter !=''">
+          where id=#{id}
+        </if>
+    </select>
+
+    <select id="findPostByTypeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fpost
+        <if  test="_parameter !=null and _parameter !=''">
+            where type_id=#{typeId}
+        </if>
+        order by posttime desc
+    </select>
+    <select id="findPostByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fpost
+        <if  test="_parameter !=null and _parameter !=''">
+            where user_id=#{userId}
+        </if>
+        order by posttime desc
+    </select>
+    <select id="findAllPost" resultMap="BaseResultMap">
+        select * from fpost order by posttime desc
+    </select>
+    <insert id="insertPost" parameterType="com.dto.Post">
+		insert into
+		fpost(theme,content,flownumber,replynumber,posttime,type_id,user_id) values
+		(#{theme,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},
+		#{flowNumber,jdbcType=INTEGER},#{replyNumber,jdbcType=INTEGER},
+		#{postTime,jdbcType=VARCHAR},#{typeId,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER})
+	</insert>
+    <!--使用trim就是为了删掉最后字段的","-->
+    <update id="updatePostById"  parameterType="com.dto.Post">
+        update fpost
+        <trim prefix="set" suffixOverrides=",">
+            <if test="theme!=null">theme=#{theme},</if>
+            <if test="content!=null">content=#{content},</if>
+            <if test="flowNumber!=null">flownumber=#{flowNumber},</if>
+            <if test="replyNumber!=null">replynumber=#{replyNumber},</if>
+            <if test="postTime!=null">posttime=#{postTime},</if>
+            <if test="typeId!=null">type_id=#{typeId},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+    <delete id="deletePostById" parameterType="java.lang.Integer">
+         delete from fpost where id=#{id}
+    </delete>
+    <!--批量删除-->
+    <delete id="deleteManyPost" parameterType="java.lang.Integer">
+        delete from fpost where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--首页根据浏览量分榜单展示-->
+    <select id="findPostByFlowNumMore200" resultMap="BaseResultMap">
+        select * from fpost where flownumber <![CDATA[ >= ]]> 200
+    </select>
+
+    <select id="findPostByFlowNumMore100" resultMap="BaseResultMap">
+        select * from fpost where flownumber <![CDATA[ >= ]]> 100
+        and flownumber <![CDATA[ < ]]> 200
+    </select>
+
+    <select id="findPostByFlowNumMore50" resultMap="BaseResultMap">
+        select * from fpost where flownumber <![CDATA[ >= ]]> 50
+        and flownumber <![CDATA[ < ]]> 100
+    </select>
+
+    <select id="findPostByFlowNumMore10" resultMap="BaseResultMap">
+        select * from fpost where flownumber <![CDATA[ >= ]]> 10
+        and flownumber <![CDATA[ < ]]> 50
+    </select>
+</mapper>
+

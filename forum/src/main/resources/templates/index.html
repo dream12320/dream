@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>河北工程校园论坛</title>
+    <meta th:replace="layouts/_header"/>
+</head>
+<body>
+<div id="webPage">
+    <div id="nav">
+        <div>
+            <div id="top_div">
+                <img src="/image/hbgc-bg.jpg" />
+            </div>
+            <div id="info_div">
+                <span style="margin-left: 50px;"><a>你好,欢迎来到河北工程大学校园论坛</a></span>
+                <span style="margin-left: 700px;"><a onclick="logout()">注销</a></span>
+                <span style="margin-left: 30px;"><a href="/user/register">免费注册</a></span>
+                <span style="margin-left: 30px;"><a id="nowTime"></a></span>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="main_left">
+            <nav class="menu boss-menu" data-ride="menu">
+                <ul id="treeMenu" class="tree tree-menu" data-ride="tree" style="border-radius: 0;">
+                    <li style="font-weight: bold">
+                        <a href="/personal/edit" target="iframe">
+                            <img th:src="@{'/image/headPicture/'+ ${user.image}}" class="round_icon" style="display:inline-block;margin-left: 10px;margin-top: 3px">
+                            <span th:text="${user.nickname}" class="ellipsis" style='margin-left: 5px;width:100px;'>访客,你好</span><br/>
+                            <a href="/personal/edit" target="iframe" th:text="${user.signature}" class="ellipsis" style="font-family: Arial;font-size: 9px;">河北工程校园论坛欢迎您!</a>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/redirect">返回首页</a>
+                    </li>
+                    <li>
+                        <a href="#">校园论坛</a>
+                        <ul th:each="pTList:${pTypeList}">
+                            <li><a th:text="${pTList.name}" th:href="@{'/post/getList/' + ${pTList.id} + '/1'}" target="iframe"></a></li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#">校园市场</a>
+                        <ul th:each="gTList:${gTypeList}">
+                            <li>
+                                <a th:text="${gTList.name}" th:href="@{'/goods/getList/'+${gTList.id}+'/1'}" target="iframe"></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">个人中心</a>
+                        <ul>
+                            <li><a href="/personal/edit" target="iframe">编辑个人信息</a></li>
+                            <li><a href="/personal/personalPosts/1" target="iframe">查看发布帖子</a></li>
+                            <li><a href="/personal/personalGoods/1" target="iframe">查看发布商品</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/post/message" target="iframe">发布帖子</a>
+                    </li>
+                    <li>
+                        <a href="/goods/publish" target="iframe">发布商品</a>
+                    </li>
+                    <li>
+                        <a href="/protocol/protocol.html" target="iframe">论坛协议</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div id="main_right">
+            <iframe name="iframe" src="/post/getList" style="border: none;width: 1150px;height: 600px;overflow:auto;"></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>

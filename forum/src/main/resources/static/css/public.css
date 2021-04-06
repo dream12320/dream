@@ -1,0 +1,67 @@
+/*主页面框架*/
+#webPage {
+    width: 1355px;
+    height: 750px;
+}
+/*顶部导航*/
+#nav {
+    width: 1355px;
+    height: 150px;
+}
+
+#top_div {
+    width: 1355px;
+    height: 100px;
+}
+
+#info_div {
+    width: 1355px;
+    height: 40px;
+    line-height: 30px;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 10px 10px 10px #888888;
+}
+
+#info_div span a {
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+}
+
+#info_div span a:hover {
+    color: rgb(255, 0, 54);
+}
+/*主页面*/
+#main {
+    width: 1355px;
+    height: 600px;
+}
+/*主页面左边部分(导航栏)*/
+#main_left {
+    overflow:auto;
+    float: left;
+    width: 200px;
+    height: 600px;
+}
+/*主页面右边部分(主页面)*/
+#main_right {
+    float: right;
+    width: 1150px;
+    height: 600px;
+}
+/*圆形头像*/
+.round_icon{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.ellipsis{
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+/*主页面右边部分主体布局样式*/

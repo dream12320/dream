@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/js/user/register.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/user/register.css" />
+    <!--导入zui主要用于显示注册失败时弹出的提示框-->
+    <!--导入zui的css-->
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <link rel="stylesheet" th:href="@{/zui/bootbox/bootbox.css}"/>
+    <!--导入zui的js-->
+    <script th:src="@{/zui/js/zui.js}"></script>
+    <script th:src="@{/zui/bootbox/bootbox.js}"></script>
+    <script>
+        $(function () {
+            function getObjectURL(file) {
+                var url = null;
+                if (window.createObjcectURL != undefined) {
+                    url = window.createOjcectURL(file);
+                }
+                else if (window.URL != undefined) {
+                    url = window.URL.createObjectURL(file);
+                }
+                else if (window.webkitURL != undefined) {
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url;
+            }
+
+            $("#image").change(function() {
+                var file = this.files[0];
+                var url = getObjectURL(file);
+                $("#pictureUrl").attr("src",url);
+                $("#pictureUrl").css('display','block');//显示
+            });
+        })
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <h2 style="text-align: center;color: rgb(200,142,123)">用户注册</h2>
+        <form id="register_form" method="post">
+            <div>
+                <label>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:</label>
+                <input id="nickname" name="nickname" class="text_input" type="text" placeholder="请输入用户昵称" />
+                <div id="nicknameErrorMsg" style="width: 200px;height:30px;background: rgb(245,242,183);margin-left:400px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+            </div>
+            <br/>
+            <div>
+                <label>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+                <input id="email" name="email" class="text_input" placeholder="请输入邮箱账号" type="email" />
+                <div id="emailErrorMsg" style="width: 200px;height:30px;background: rgb(245,242,183);margin-left:400px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+            </div><br/>
+            <div>
+                <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+                <input id="password" name="password" class="text_input" placeholder="请输入用户密码" type="password" />
+                <div id="passwordErrorMsg" style="width: 200px;height:30px;background: rgb(245,242,183);margin-left:400px;margin-top:-45px;margin-bottom:15px;color:red;font-size:15px;display:none;border-radius: 5px;"></div>
+            </div><br/>
+            <div>
+                <label>上传头像:</label>
+                <input id="image" name="image" multiple type="file" />
+                <img src="" height="80" width="120" id="pictureUrl" style="display: none"/>
+            </div><br/>
+            <div>
+                <label>个性签名:</label><br/>
+                <textarea id="signature" name="signature" rows="4"  placeholder="请输入个性签名"></textarea>
+            </div>
+            <div><hr /></div>
+            <div style="margin-top: 20px">
+                <button class="button" type="button" onclick="register()" style="margin-left: 50px;">提交</button>
+                <button class="button" type="button" onclick="reset()" style="margin-left: 50px;">重置</button>
+            </div>
+            <div style="color:white;margin-top: -50px;margin-left: 200px" align="center"><br/>
+                <a href="/user/login" style="color: rgb(200,142,123);text-decoration: none;font-size: 13px">已有账号？点击登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

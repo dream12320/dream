@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>河北工程校园论坛后台管理</title>
+    <meta th:replace="layouts/_header_bg"/>
+</head>
+<body>
+<div id="webPage">
+    <div id="nav">
+        <div>
+            <div id="top_div" style="background-image: url('/image/bg/logo_bg.png');height: 90px;">
+                <br/><br/>
+                <span style="margin-left: 800px;"><a style="text-decoration: none;color: #b52b27">管理员,欢迎来到校园论坛后台管理系统</a></span>
+                <span style="margin-left: 30px;"><a style="text-decoration: none;color: #b52b27" onclick="bgLogout()">注销</a></span>
+                <span style="margin-left: 30px;"><a style="text-decoration: none;color: #b52b27" id="nowTime"></a></span>
+            </div>
+        </div>
+    </div>
+    <div id="main" style="margin-top: -50px;">
+        <div id="main_left">
+            <nav class="menu boss-menu" data-ride="menu">
+                <ul id="treeMenu" class="tree tree-menu" data-ride="tree" style="border-radius: 0;">
+                    <li>
+                        <a href="/user/bg/redirect">返回首页</a>
+                    </li>
+                    <li>
+                        <a href="#">用户管理</a>
+                        <ul>
+                            <li><a href="/user/bg/getAllUser/1" target="iframe">普通用户</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">校园论坛</a>
+                        <ul>
+                            <li>
+                                <a href="/post/bg/getAllPosts/1" target="iframe">帖子管理</a>
+                            </li>
+                            <li>
+                                <a href="/post/bg/getAllPostTypes" target="iframe">类型管理</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#">校园市场</a>
+                        <ul>
+                            <li><a href="/goods/bg/getAllGoods/1" target="iframe">商品管理</a></li>
+                            <li><a href="/goods/bg/getAllGoodsTypes" target="iframe">类型管理</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/protocol/protocol.html" target="iframe">论坛协议</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div id="main_right">
+            <iframe name="iframe" src="/bg/home.html" style="border: none;width: 1150px;height: 600px;overflow:auto;"></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>

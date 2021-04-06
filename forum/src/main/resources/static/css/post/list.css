@@ -1,0 +1,60 @@
+#list{
+    margin-top: -5px;
+    width: 1100px;
+    height: 550px;
+    border: 1px solid #ccc;
+    padding: 1em;
+    border-radius: 3px;
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, .2);
+    opacity: 0.88;
+}
+tr .title{
+    width: 450px;
+    height: 30px;
+    color: rgb(107, 100, 100);
+    font-size: 14px;
+    white-space:nowrap;/*超过长度,显示省略号*/
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+tr .text{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    color: rgb(107, 100, 100);
+    font-size: 14px;
+}
+tr .author{
+    width: 150px;
+    height: 30px;
+    color: rgb(107, 100, 100);
+    font-size: 14px;
+}
+tr .time{
+    width: 200px;
+    height: 30px;
+    color: rgb(107, 100, 100);
+    font-size: 14px;
+}
+/*分页*/
+#pagination{
+    height: 60px;
+    width: 1100px;
+}
+#pagination #pages{
+    width: 350px;
+    height: 50px;
+}
+
+.center-in-center{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#table a{
+    text-decoration: none;
+}
+#table a:hover{
+    color:red;
+}

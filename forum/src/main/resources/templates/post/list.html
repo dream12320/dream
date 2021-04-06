@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>帖子列表</title>
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/post/list.css" />
+    <script>
+        $(function () {
+            //改变偶数行背景色
+            $("table tr:odd td").css("background-color", "WhiteSmoke");
+            //分页设置
+            var pages=[[${pageInfo.pages}]];//获取总页数
+            var pageNum=[[${pageInfo.pageNum}]];//获取当前页
+
+            if(pages==0){//没有数据
+                //三个页码不显示
+                $("#firstPage").hide();
+                $("#secondPage").hide();//表示当前页
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==1){//有一页数据
+                //只显示当前页数据
+                $("#firstPage").hide();
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==2 && pageNum == 2){//有两页数据(并且当前页等于总页数)
+                //只显示当前页和上一页数据
+                $("#thirdPage").hide();
+            }else if(pages==2 && pageNum == 1){//有两页数据(并且当前页等于首页)
+                //只显示当前页和下一页数据
+                $("#firstPage").hide();
+            }else if(pages>=3 && pageNum==pages){
+                //当页码大于三页，且点击最后一页
+                $("#first").html(pageNum-2);
+                $("#second").html(pageNum-1);
+                $("#third").html(pageNum);
+            }else if(pages>=3 && pageNum==1){
+                //当页码大于三页，且点击第一页
+                $("#first").html(pageNum);
+                $("#second").html(pageNum + 1);
+                $("#third").html(pageNum + 2);
+            }
+        })
+    </script>
+</head>
+<body>
+<div id="list">
+   <p style="text-align: center">
+       <strong style="color:#0a67fb">河北工程大学校园论坛---</strong>
+       <span th:text="${postType.name}" style="color: #1251b6"></span>
+   </p>
+    <table cellspacing="0" id="table">
+        <tr>
+            <td class="title">帖子标题</td>
+            <td class="text">帖子浏览</td>
+            <td class="text">帖子回复</td>
+            <td class="author">帖子作者</td>
+            <td class="time">更新时间</td>
+        </tr>
+        <tr th:each="post:${pList}">
+            <td>
+                <a th:text="${post.theme}" th:href="@{'/post/getDetail/0/'+${post.id} + '/1'}" class="title"></a>
+            </td>
+            <td th:text="${post.flowNumber}"  class="text"></td>
+            <td th:text="${post.replyNumber}" class="text"></td>
+            <td>
+                <a th:text="${post.userName}" href="/personal/edit" class="author"></a>
+            </td>
+            <td th:text="${post.postTime}" class="time"></td>
+        </tr>
+    </table>
+    <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+    <div id="pagination">
+        <div id="pages" class="center-in-center">
+            <ul class="pager">
+                <li id="prePage" class="previous">
+                    <a th:href="@{'/post/getList/'+${postType.id}+'/'+ ${pageInfo.prePage}}">«上一页</a>
+                </li>
+                <li id="firstPage">
+                    <a id="first" th:text="${pageInfo.pageNum -1}" th:href="@{'/post/getList/'+${postType.id}+'/'+ ${pageInfo.pageNum -1}}"></a>
+                </li>
+                <li id="secondPage" class="active">
+                    <a id="second" th:text="${pageInfo.pageNum}" th:href="@{'/post/getList/'+${postType.id}+'/'+ ${pageInfo.pageNum}}"></a>
+                </li>
+                <li id="thirdPage">
+                    <a id="third" th:text="${pageInfo.pageNum + 1}" th:href="@{'/post/getList/'+${postType.id}+'/'+ ${pageInfo.pageNum +1}}"></a>
+                </li>
+                <li id="nextPage" class="next">
+                    <a th:href="@{'/post/getList/'+${postType.id}+'/'+ ${pageInfo.nextPage}}">下一页»</a>
+                </li>
+                <li><span th:text="'共'+ ${pageInfo.pages} +'页'"></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

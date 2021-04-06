@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PostTypeMapper">
+    <resultMap id="BaseResultMap" type="com.dto.PostType">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"></result>
+    </resultMap>
+
+    <select id="findPostTypeById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fposttype
+        <if  test="_parameter !=null and _parameter !=''">
+          where id=#{id}
+        </if>
+    </select>
+    <select id="findPostTypeByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from fposttype
+        <if  test="_parameter !=null and _parameter !=''">
+            where name=#{name}
+        </if>
+    </select>
+    <select id="findAllPostType" resultMap="BaseResultMap">
+        select * from fposttype
+    </select>
+
+    <insert id="insertPostType" parameterType="com.dto.PostType">
+		insert into fposttype(name) values (#{name,jdbcType=VARCHAR})
+	</insert>
+    <delete id="deletePostTypeById" parameterType="java.lang.Integer">
+         delete from fposttype where id=#{id}
+    </delete>
+    <!--使用trim就是为了删掉最后字段的","-->
+    <update id="updatePostTypeById"  parameterType="com.dto.PostType">
+        update fposttype
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">name=#{name}</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+</mapper>
+

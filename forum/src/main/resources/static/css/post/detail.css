@@ -1,0 +1,133 @@
+*{margin: 0;padding: 0}
+#postDetail{
+    width: 1100px;
+    margin-top: 3px;
+    border: 1px solid #ccc;
+    opacity: 0.88;
+}
+#postDetail_up{
+    width: 1100px;
+    height: 120px;
+}
+#postDetail_middle{
+    width: 900px;
+    margin-left: 50px;
+    background-color: rgb(238, 238, 238);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#postDetail_bottom{
+    width: 900px;
+    margin-left: 50px;
+}
+#postDetail_bottom #comment{
+    width: 450px;
+    font-size: 14px;
+    color: #717171;
+    font-family: Arial;
+    padding: 0 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+#postDetail_commentList{
+    width: 900px;
+    margin-left: 50px;
+}
+.detail-span{
+    color: rgb(107, 100, 100);
+    font-size: 14px;
+}
+.detail-userName{
+    color:#1251b6;
+    font-size: 14px;
+}
+.nav-txt{
+    color:#1251b6;
+    font-size: 15px;
+}
+.detail-txt{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding-top: 15px;
+    padding-bottom: 25px;
+    color: rgb(107, 100, 100);
+    font-size: 15px;
+}
+/*评论按钮*/
+.comment-button {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: white;
+    font-size: 120%;
+    opacity: 1;
+    width: 150px;
+    height: 40px;
+    background-color:yellow;
+    border-radius: 4px;
+}
+.comment-button:hover {
+    background-color:red;
+    transition: 0.3s linear;
+}
+.detail-span-gap{
+    margin-left: 20px;
+}
+.detail-span-gaps{
+    margin-left: 50px;
+}
+/*表格，用于展示用户的评价*/
+tr .author{
+    width: 500px;
+    height: 30px;
+    color:#1251b6;
+    font-size: 14px;
+    white-space:nowrap;/*超过长度,显示省略号*/
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+tr .time{
+    width: 200px;
+    height: 30px;
+    color:#1251b6;
+    font-size: 14px;
+}
+tr .text{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    color:#1251b6;
+    font-size: 14px;
+}
+tr .comment-text{
+    width: 680px;
+    color: rgb(107, 100, 100);
+    font-size: 14px;
+}
+/*评论分页*/
+#pagination{
+    height: 60px;
+    width: 1100px;
+}
+#pagination #pages{
+    width: 300px;
+    height: 50px;
+}
+.center-in-center{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#postDetail_up a{
+    text-decoration: none;
+}
+#postDetail_up a:hover{
+    color: red;
+}
+#postDetail_commentList a{
+    text-decoration: none;
+}
+#postDetail_commentList a:hover{
+    color: red;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <link rel="stylesheet" type="text/css" href="/css/goods/detail.css" />
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+</head>
+<body>
+<div id="goodsDetail">
+    <img src="/image/goods/detail-logo.gif">
+    <a class="nav-text detail-span-gaps" href="/home.html">河北工程大学校园论坛</a>
+    <a class="nav-text"> > </a>
+    <a th:text="${goodsType.name}" class="nav-text" th:href="@{'/goods/getList/'+${goodsType.id} +'/1'}" target="iframe"></a>
+    <a class="nav-text detail-span-gap" href="/goods/publish" target="iframe">[我要发布商品]</a>
+    <br/><br/>
+    <div id="goodsDetail-left">
+        <div class="center-in-center" style="width: 400px;height: 400px;">
+            <img th:src="@{'/image/goodsPicture/'+ ${goods.goodsPicture}}">
+        </div>
+    </div>
+    <div id="goodsDetail-right">
+        <div style="width: 509px;margin-left: 30px;">
+            <strong th:text="${goods.goodsName} +' '+ ${goods.goodsDescribe}"></strong>
+            <br/><br/>
+        </div>
+        <div style="background: url('/image/goods/board.png');width: 509px;height: 40px;margin-left: 30px;">
+            <span style="color: red;margin-left: 60px;font-size: 20px;">¥</span>
+            <span th:text="${goods.goodsPrice}" style="color: red;font-size: 25px;"></span><br/>
+        </div>
+        <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+        <div style="width: 509px;margin-left: 30px;">
+            <span class="text">卖主信息:</span><br/>
+            <a href="/personal/edit">
+                <img src="/image/icon.png" style=" width: 50px;height: 50px;margin-left: 70px;">
+                <a id="userName" th:text="${goods.userName}" href="/personal/edit" class="text"></a>
+            </a>
+            <br/><br/>
+            <span class="text">联系方式:</span>
+            <span th:text="${user.email}" class="text"></span>
+            <br/><br/>
+            <span class="text">商品详情:</span><br/>
+            <span th:text="${goods.goodsName} +' '+ ${goods.goodsDescribe}" class="detail"></span>
+            <br/>
+            <button id="button" type="button">联系购买</button>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

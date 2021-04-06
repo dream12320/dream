@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.dto.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"></result>
+        <result column="password" jdbcType="VARCHAR" property="password"></result>
+        <result column="email" jdbcType="VARCHAR" property="email"></result>
+        <result column="image" jdbcType="VARCHAR" property="image"></result>
+        <result column="signature" jdbcType="VARCHAR" property="signature"></result>
+    </resultMap>
+
+    <select id="findUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fuser
+        <if  test="_parameter !=null and _parameter !=''">
+          where id=#{id}
+        </if>
+    </select>
+
+    <select id="findUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from fuser
+        <if  test="_parameter !=null and _parameter !=''">
+            where email=#{email}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="findAllUser" resultMap="BaseResultMap">
+        select * from fuser
+    </select>
+
+    <insert id="insertUser" parameterType="com.dto.User">
+		insert into
+		fuser(nickname,password,email,signature,image) values
+		(#{nickname,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},#{signature,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR})
+	</insert>
+    <!--使用trim就是为了删掉最后字段的","-->
+    <update id="updateUserById"  parameterType="com.dto.User">
+        update fuser
+        <trim prefix="set" suffixOverrides=",">
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="signature!=null">signature=#{signature},</if>
+            <if test="image!=null">image=#{image},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <select id="findUserBySearch" parameterType="com.dto.User" resultMap="BaseResultMap">
+        select * FROM fuser
+        WHERE 1=1
+        <if test="nickname != null and nickname != ''">
+            <bind name="nickname" value="'%' + nickname + '%'"/>
+            and nickname like #{nickname}
+        </if>
+        <if test="email != null and email != ''">
+            <bind name="email" value="'%' + email + '%'"/>
+            and email like #{email}
+        </if>
+    </select>
+    <!--单个删除-->
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+         delete from fuser where id=#{id}
+    </delete>
+    <!--批量删除-->
+    <delete id="deleteManyUser" parameterType="java.lang.Integer">
+        delete from fuser where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
+

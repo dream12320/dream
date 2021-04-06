@@ -1,0 +1,40 @@
+#home {
+    width: 1120px;
+    height: 600px;
+
+}
+
+#home ul li a {
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+}
+
+#home ul li a:hover {
+    font-size: 15px;
+    color: brown;
+}
+/*右边主页面的左边(帖子展示)*/
+#home #left {
+    margin-left: 10px;
+    float: left;
+    width: 650px;
+    height: 600px;
+}
+/*右边主页面的右边(广告区展示)*/
+#home #right {
+    float: right;
+    width: 450px;
+    height: 600px;
+}
+#home #right p{
+    font-size: 14px;
+    color: rgb(51,51,51);
+}
+ul li {
+    margin-top: -15px;
+    padding-top: -20px;
+    list-style-type: none;
+    margin-left: -20px;
+}

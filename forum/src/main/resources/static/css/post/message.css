@@ -1,0 +1,106 @@
+#messages-up{
+    width: 1120px;
+    height: 80px;
+    background: rgb(255,218,68);
+}
+#messages-up ul li {
+    list-style-type: none;
+    float: left;
+    margin-left: 20px;
+}
+#messages-up ul li a{
+    text-decoration: none;
+    font-size: 15px;
+}
+#messages-down{
+    width: 1120px;
+    height: 500px;
+}
+#messages-down #messages_form {
+    float: left;
+    width: 700px;
+    height: 500px;
+    border: 1px solid #ccc;
+    padding: 3em;
+    border-radius: 3px;
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, .2);
+    opacity: 0.88;
+}
+#messages-down #messages_security {
+    float: right;
+    margin-top: 30px;
+    width: 350px;
+    border: 1px solid #ccc;
+    background:rgb(252,248,227);
+    padding: 3em;
+    border-radius: 3px;
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, .2);
+    opacity: 0.88;
+}
+#messages_security p{
+    color: #717171;
+    font-size: 14px;
+}
+#content{
+    width: 390px;
+    margin-left: 60px;
+    background: rgb(245,242,183);
+    font-size: 14px;
+    color: #717171;
+    font-family: Arial;
+    padding: 0 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+/*发布按钮*/
+.post {
+    color: white;
+    font-size: 120%;
+    opacity: 1;
+    width: 150px;
+    height: 40px;
+    background-color: rgb(255,221,0);
+    border-radius: 4px;
+}
+.post:hover {
+    background-color: red;
+    transition: 0.3s linear;
+}
+.messages_input {
+    width: 390px;
+    height: 36px;
+    border: 1px solid #cad2db;
+    background: rgb(245,242,183);
+    padding: 0 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 36px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #717171;
+    font-family: Arial;
+}
+.messages-warn{
+    width: 300px;
+    height: 36px;
+    border: 1px solid red;
+    background:rgb(252,248,227);
+    padding: 0 5px;
+    line-height: 36px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-top: -20px;
+    margin-left: 70px;
+    font-size: 14px;
+    color: #717171;
+    font-family: Arial;
+}
+.center-in-center{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

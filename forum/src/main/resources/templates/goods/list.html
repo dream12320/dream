@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/goods/list.css" />
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <script>
+        $(function () {
+            //分页设置
+            var pages=[[${pageInfo.pages}]];//获取总页数
+            var pageNum=[[${pageInfo.pageNum}]];//获取当前页
+
+            if(pages==0){//没有数据
+                //三个页码不显示
+                $("#firstPage").hide();
+                $("#secondPage").hide();//表示当前页
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==1){//有一页数据
+                //只显示当前页数据
+                $("#firstPage").hide();
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==2 && pageNum == 2){//有两页数据(并且当前页等于总页数)
+                //只显示当前页和上一页数据
+                $("#thirdPage").hide();
+            }else if(pages==2 && pageNum == 1){//有两页数据(并且当前页等于首页)
+                //只显示当前页和下一页数据
+                $("#firstPage").hide();
+            }else if(pages>=3 && pageNum==pages){
+                //当页码大于三页，且点击最后一页
+                $("#first").html(pageNum-2);
+                $("#second").html(pageNum-1);
+                $("#third").html(pageNum);
+            }else if(pages>=3 && pageNum==1){
+                //当页码大于三页，且点击第一页
+                $("#first").html(pageNum);
+                $("#second").html(pageNum + 1);
+                $("#third").html(pageNum + 2);
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="goodsLists">
+        <strong style="margin-left: 50px;">个人闲置：</strong>
+        <span class="text">收藏夹</span>
+        <span> > </span>
+        <strong th:text="${goodsType.name}"></strong>
+        <table cellspacing="0" cellpadding="0" id="table">
+            <tr th:each="goods:${gList}">
+                <td>
+                    <div id="goodsPicture">
+                        <a th:href="@{'/goods/getDetail/'+ ${goods.id}}">
+                            <img src="/image/goods/normalWorld.jpg" th:src="@{'/image/goodsPicture/'+ ${goods.goodsPicture}}" class="center-in-center">
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div id="goodsDescribe">
+                        <img src="/image/goods/market-logo.png">
+                        <a id="name" th:href="@{'/goods/getDetail/'+ ${goods.id}}" th:text="${goods.goodsName} +'  '+ ${goods.goodsDescribe}"></a>
+                        <span style="color: grey">¥</span>
+                        <span th:text="${goods.goodsPrice}" style="color: red;font-size: 15px;"></span><br/>
+                        <span id="describe" th:text="${goods.goodsName} +' '+ ${goods.goodsDescribe}"></span>
+                        <span class="from">来自:河北工程大学校园市场</span>
+                    </div>
+                </td>
+                <td>
+                    <div id="user">
+                        <a href="/personal/edit">
+                            <img src="/image/icon.png">
+                            <a id="userName" th:text="${goods.userName}" href="/personal/edit"></a>
+                        </a>
+                        <br/><br/>
+                        <a class="text" href="/goods/getMoreList/1" style="margin-left: 10px;">该卖家更多商品</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+        <div id="pagination">
+            <div id="pages" class="center-in-center">
+                <ul class="pager">
+                    <li id="prePage" class="previous">
+                        <a th:href="@{'/goods/getList/'+${goodsType.id}+'/'+ ${pageInfo.prePage}}">«上一页</a>
+                    </li>
+                    <li id="firstPage">
+                        <a id="first" th:text="${pageInfo.pageNum -1}" th:href="@{'/goods/getList/'+${goodsType.id}+'/'+ ${pageInfo.pageNum -1}}"></a>
+                    </li>
+                    <li id="secondPage" class="active">
+                        <a id="second" th:text="${pageInfo.pageNum}" th:href="@{'/goods/getList/'+${goodsType.id}+'/'+ ${pageInfo.pageNum}}"></a>
+                    </li>
+                    <li id="thirdPage">
+                        <a id="third" th:text="${pageInfo.pageNum + 1}" th:href="@{'/goods/getList/'+${goodsType.id}+'/'+ ${pageInfo.pageNum +1}}"></a>
+                    </li>
+                    <li id="nextPage" class="next">
+                        <a th:href="@{'/goods/getList/'+${goodsType.id}+'/'+ ${pageInfo.nextPage}}">下一页»</a>
+                    </li>
+                    <li><span th:text="'共'+ ${pageInfo.pages} +'页'"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

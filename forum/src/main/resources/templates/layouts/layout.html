@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">河北工程校园论坛</title>
+        <meta th:replace="layouts/_header"/>
+    </head>
+    <body>
+    <div id="webPage">
+        <div id="nav">
+            <div th:replace="layouts/_navigation :: navigation">header</div>
+        </div>
+        <div id="main">
+            <div id="main_left">
+                <div th:replace="layouts/_sidebar :: sidebar">sidebar</div>
+            </div>
+            <div id="main_right">
+                <div layout:fragment="main">Content</div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

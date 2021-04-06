@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.GoodsTypeMapper">
+    <resultMap id="BaseResultMap" type="com.dto.GoodsType">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"></result>
+    </resultMap>
+
+    <select id="findGoodsTypeById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from fgoodstype
+        <if  test="_parameter !=null and _parameter !=''">
+          where id=#{id}
+        </if>
+    </select>
+    <select id="findGoodsTypeByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from fgoodstype
+        <if  test="_parameter !=null and _parameter !=''">
+            where name=#{name}
+        </if>
+    </select>
+    <select id="findAllGoodsType" resultMap="BaseResultMap">
+        select * from fgoodstype
+    </select>
+
+    <insert id="insertGoodsType" parameterType="com.dto.GoodsType">
+		insert into fgoodstype(name) values (#{name,jdbcType=VARCHAR})
+	</insert>
+    <delete id="deleteGoodsTypeById" parameterType="java.lang.Integer">
+         delete from fgoodstype where id=#{id}
+    </delete>
+    <update id="updatePostTypeById"  parameterType="com.dto.GoodsType">
+        update fgoodstype
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">name=#{name}</if>
+        </trim>
+    </update>
+</mapper>
+

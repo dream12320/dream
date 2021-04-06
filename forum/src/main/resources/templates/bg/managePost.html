@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台帖子管理</title>
+    <link rel="stylesheet" type="text/css" href="/css/bg/layui.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bg/xadmin.css" />
+    <link rel="stylesheet" type="text/css" href="/css/post/list.css" />
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <!--导入zui主要用于显示后台删除帖子时弹出的提示框-->
+    <!--导入zui的css-->
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <link rel="stylesheet" th:href="@{/zui/bootbox/bootbox.css}"/>
+    <!--导入zui的js-->
+    <script th:src="@{/zui/js/zui.js}"></script>
+    <script th:src="@{/zui/bootbox/bootbox.js}"></script>
+    <script type="text/javascript">
+        //单选删除
+        function del(id) {
+            bootbox.dialog({
+                title:'删除帖子',
+                message:'<div style="line-height: 30px"><span>是否删除此帖子！</span></div>',
+                size: 'small',
+                buttons:{
+                    cancel:{
+                        label:'取消',
+                    },
+                    confirm: {
+                        label:'确定',
+                        callback: function(){
+                            window.location.href = '/post/bg/deletePostById/'+id;
+                        }
+                    }
+                }
+            })
+        }
+        //批量删除
+        function dels() {
+            var checkedNum = $("input[name='box']:checked").length;
+            if(checkedNum==0){
+                alert("请至少选择一项!");
+                return false;
+            }
+            var checkedList = new Array();
+            $("input[name='box']:checked").each(function () {
+                checkedList.push($(this).val());
+            });
+            bootbox.dialog({
+                title:'批量删除帖子',
+                message:'<div style="line-height: 30px"><span>是否批量删除帖子！</span></div>',
+                size: 'small',
+                buttons:{
+                    cancel:{
+                        label:'取消',
+                    },
+                    confirm: {
+                        label:'确定',
+                        callback: function(){
+                            $.ajax({
+                                type: "GET",//方法类型
+                                dataType: "text",//预期服务器返回的数据类型
+                                url: "/post/bg/deleteManyPost" ,//url
+                                data: {"delItems":checkedList.toString()},
+                                success: function (data) {
+                                    if(data=="success"){
+                                        window.location.href = '/post/bg/getAllPosts/1';
+                                    }
+                                },
+                                error : function() {
+                                    alert("帖子批量删除异常！");
+                                    window.location.href = '/post/bg/getAllPosts/1';
+                                }
+                            });
+                        }
+                    }
+                }
+            })
+        }
+        $(function() {
+            //给全选的复选框添加事件
+            $("#all").click(function() {
+                // this 全选的复选框
+                var userids = this.checked;
+                //获取name=box的复选框 遍历输出复选框
+                $("input[name=box]").each(function() {
+                    this.checked = userids;
+                });
+            });
+
+            //给name=box的复选框绑定单击事件
+            $("input[name=box]").click(function() {
+                //获取选中复选框长度
+                var length = $("input[name=box]:checked").length;
+                //未选中的长度
+                var len = $("input[name=box]").length;
+                if (length == len) {
+                    $("#all").get(0).checked = true;
+                } else {
+                    $("#all").get(0).checked = false;
+                }
+            });
+            //分页设置
+            var pages=[[${pageInfo.pages}]];//获取总页数
+            var pageNum=[[${pageInfo.pageNum}]];//获取当前页
+            var nextPage=[[${pageInfo.nextPage}]];//获取下一页
+            if(pages==0){//没有数据
+                //三个页码不显示
+                $("#firstPage").hide();
+                $("#secondPage").hide();//表示当前页
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+            }else if(pages==1){//有一页数据
+                //只显示当前页数据
+                $("#secondPage").hide();
+                $("#thirdPage").hide();
+                //上一页和下一页不可用
+                $("#prePage").addClass('disabled');
+                $("#nextPage").addClass('disabled');
+
+                $("#first").html(pageNum);
+                $("#firstPage").addClass('disabled');
+            }else if(pages==2 && pageNum == 2){//有两页数据(并且当前页等于总页数)
+                //只显示当前页和上一页数据
+                $("#thirdPage").hide();
+
+                $("#first").html(pageNum-1);
+                $("#second").html(pageNum);
+
+                $("#first").attr("href","/post/bg/getAllPosts/" + (pageNum-1));
+                $("#second").attr("href","/post/bg/getAllPosts/" + pageNum);
+            }else if(pages==2 && pageNum == 1){//有两页数据(并且当前页等于首页)
+                //只显示当前页和下一页数据
+                $("#thirdPage").hide();
+
+                $("#first").html(pageNum);
+                $("#second").html(pageNum +1);
+                $("#first").attr("href","/post/bg/getAllPosts/" + pageNum);
+                $("#second").attr("href","/post/bg/getAllPosts/" + (pageNum +1));
+            }else if(pages>=3 && pageNum==pages){
+                //当页码大于三页，且点击最后一页
+                $("#first").html(pageNum-2);
+                $("#second").html(pageNum-1);
+                $("#third").html(pageNum);
+                $("#first").attr("href","/post/bg/getAllPosts/" +(pageNum-2));
+                $("#second").attr("href","/post/bg/getAllPosts/" + (pageNum -1));
+                $("#third").attr("href","/post/bg/getAllPosts/" + pageNum);
+            }else if(pages>=3 && pageNum==1){
+                //当页码大于三页，且点击第一页
+                $("#first").html(pageNum);
+                $("#second").html(pageNum + 1);
+                $("#third").html(pageNum + 2);
+
+                $("#first").attr("href","/post/bg/getAllPosts/" +pageNum);
+                $("#second").attr("href","/post/bg/getAllPosts/" + (pageNum +1));
+                $("#third").attr("href","/post/bg/getAllPosts/" + (pageNum + 2));
+            }else if(pages>=3 && nextPage-pageNum==1){
+                //当页码大于三页，且点击第一页
+                $("#first").html(pageNum-1);
+                $("#second").html(pageNum);
+                $("#third").html(pageNum + 1);
+
+                $("#first").attr("href","/post/bg/getAllPosts/" + (pageNum-1));
+                $("#second").attr("href","/post/bg/getAllPosts/" + (pageNum));
+                $("#third").attr("href","/post/bg/getAllPosts/" + (pageNum + 1));
+            }
+        });
+    </script>
+</head>
+
+<body>
+<div class="x-body">
+    <form method="get" action="/post/bg/getPostsByType/1">
+        <div class="layui-row">
+            <select id="type" name="name" class="demo-default" style="width:30%;height:40px;">
+                <option th:each="postType:${postTypes}" th:text="${postType.name}"></option>
+            </select>
+            <button class="layui-btn" type="submit">搜索</button>
+        </div>
+    </form>
+    <br>
+    <form>
+        <div>
+            <!-- 批量删除 -->
+            <button class="layui-btn layui-btn-danger" type="button" onclick="dels()">
+                <i class="layui-icon">批量删除</i>
+            </button>
+            <span class="x-right" style="line-height:40px" th:text=" '共有数据：' + ${pageInfo.total} +'条' "></span>
+            <div>
+                <!-- 显示 -->
+                <table class="layui-table" id="tableId">
+                    <thead>
+                    <tr>
+                        <th style="width:60px;"><input type="checkbox" name="all" id="all"></th>
+                        <th style="width:60px;">ID</th>
+                        <th style="width:60px;">编号</th>
+                        <th style="width:250px;">帖子标题</th>
+                        <th style="width:80px;">访问量</th>
+                        <th style="width:80px;">回复量</th>
+                        <th style="width:100px;">帖子类型</th>
+                        <th style="width:150px;">发帖时间</th>
+                        <th style="width:100px;">发帖人</th>
+                        <th style="width:100px;" align="center"><p>操作</p></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="post,userStat:${pList}">
+                            <td style="width:60px;">
+                                <input type="checkbox" name="box" id="box" th:value="${post.id}">
+                            </td>
+                            <td><span th:text="${userStat.count}"></span></td>
+                            <td><span th:text="${post.id}"></span></td>
+                            <td style="width:250px;"><span th:text="${post.theme}"></span></td>
+                            <td style="width:40px;"><span th:text="${post.flowNumber}"></span></td>
+                            <td style="width:40px;"><span th:text="${post.replyNumber}"></span></td>
+                            <td style="width:40px;"><span th:text="${post.typeId}"></span></td>
+                            <td style="width:180px;"><span th:text="${post.postTime}"></span></td>
+                            <td style="width:150px;"><span th:text="${post.userName}"></span></td>
+                            <td class="td-manage" align="center" style="width:100px;">
+                                <p th:onclick="'javascript:del('+${post.id}+')'"><i class="layui-icon">删除</i></p>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+    <hr style="border:0;background-color:rgb(229,229,229);height:1px;">
+    <!--查询时的分页-->
+    <div id="pagination">
+        <div id="pages" class="center-in-center">
+            <ul class="pager">
+                <li id="prePage" class="previous">
+                    <a th:href="@{'/post/bg/getAllPosts/'+ ${pageInfo.prePage}}">«上一页</a>
+                </li>
+                <li id="firstPage">
+                    <a id="first"></a>
+                </li>
+                <li id="secondPage">
+                    <a id="second"></a>
+                </li>
+                <li id="thirdPage">
+                    <a id="third"></a>
+                </li>
+                <li id="nextPage" class="next">
+                    <a th:href="@{'/post/bg/getAllPosts/'+ ${pageInfo.nextPage}}">下一页»</a>
+                </li>
+                <li><span th:text="'共'+ ${pageInfo.pages} +'页'"></span></li>
+            </ul>
+            <script>
+                $(function () {
+                    $("#pages").find("li").each(function () {
+                        var a = $(this).find("a:first")[0];
+                        if ($(a).attr("href") === location.pathname) {
+                            $(this).addClass("active");
+                        } else {
+                            $(this).removeClass("active");
+                        }
+                    });
+                })
+            </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

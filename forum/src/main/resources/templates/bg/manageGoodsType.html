@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台商品类型管理</title>
+    <link rel="stylesheet" type="text/css" href="/css/bg/layui.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bg/xadmin.css" />
+    <link rel="stylesheet" type="text/css" href="/css/post/list.css" />
+    <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+    <!--导入zui主要用于显示后台删除帖子时弹出的提示框-->
+    <!--导入zui的css-->
+    <link rel="stylesheet" th:href="@{/zui/css/zui.css}"/>
+    <link rel="stylesheet" th:href="@{/zui/bootbox/bootbox.css}"/>
+    <!--导入zui的js-->
+    <script th:src="@{/zui/js/zui.js}"></script>
+    <script th:src="@{/zui/bootbox/bootbox.js}"></script>
+    <script type="text/javascript">
+        //单选删除
+        function del(id) {
+            bootbox.dialog({
+                title:'删除商品类型',
+                message:'<div style="line-height: 30px"><span>是否删除此商品类型！</span></div>',
+                size: 'small',
+                buttons:{
+                    cancel:{
+                        label:'取消',
+                    },
+                    confirm: {
+                        label:'确定',
+                        callback: function(){
+                            window.location.href = '/goods/bg/deleteGoodsType/'+id;
+                        }
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="x-body">
+    <form id="goodsType_form" method="get" action="/goods/bg/addGoodsType">
+        <div class="layui-row">
+            <input class="search-input" name="name" style="width:30%;height:40px;"/>
+            <button class="layui-btn" type="submit">添加类型</button>
+        </div>
+    </form>
+    <br>
+    <form>
+        <div>
+            <div>
+                <!-- 显示 -->
+                <table class="layui-table" id="tableId">
+                    <thead>
+                    <tr>
+                        <th style="width:60px;">ID</th>
+                        <th style="width:60px;">编号</th>
+                        <th style="width:150px;">类型名</th>
+                        <th style="width:100px;" align="center"><p>操作</p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="goods,userStat:${goodsTypes}">
+                            <td><span th:text="${userStat.count}"></span></td>
+                            <td><span th:text="${goods.id}"></span></td>
+                            <td style="width:150px;"><span th:text="${goods.name}"></span></td>
+                            <td class="td-manage" align="center" style="width:100px;">
+                                <a th:onclick="'javascript:del('+${goods.id}+')'">
+                                    <i class="layui-icon">删除</i>
+                                </a>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
